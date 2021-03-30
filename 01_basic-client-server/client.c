@@ -206,8 +206,10 @@ void on_completion(struct ibv_wc *wc)
 {
   struct connection *conn = (struct connection *)(uintptr_t)wc->wr_id;
 
-  if (wc->status != IBV_WC_SUCCESS)
+  if (wc->status != IBV_WC_SUCCESS){
+    printf("wc_status: %d\n", wc->status);
     die("on_completion: status is not IBV_WC_SUCCESS.");
+  }
 
   if (wc->opcode & IBV_WC_RECV)
     printf("received message: %s\n", conn->recv_region);
